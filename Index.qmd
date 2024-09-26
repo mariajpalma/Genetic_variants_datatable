@@ -1,9 +1,0 @@
----
-title: "Repaso"
----
-
-```{r, eval=TRUE}
-test <- 1 +10
-print(test)
-
-```
