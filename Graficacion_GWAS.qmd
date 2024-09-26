@@ -1,0 +1,185 @@
+---
+title: "Graficación de GWAS"
+format: html
+editor: visual
+---
+
+Durante esta clase veremos como usar data.table para manejar datos de gran tamaño. Por ejemplo los summary statistics de GWAS. Los datos aquí usados se descargaron: [Zenodo MXB](https://zenodo.org/records/7420254) Y son datos del artículo: [Mexican Biobank advances population and medical genomics of diverse ancestries](https://www.nature.com/articles/s41586-023-06560-0) Para hacer este ejercicio sólo utilizaremos el archivo Tryglicerides_INT.imputed.stats.gz que se encuentra dentro de la carpeta full_cohort.
+
+## Procesamiento de datos
+
+### Cargar librería
+
+```{r}
+library(data.table)
+```
+
+### Lectura de archivos
+
+Primero leeremos nuestro archivo comprimido, para no ocupar tanto espacio de almacenamiento en nuestras computadoras. También veremos el tiempo que tarda nuestra máquina en leer el archivo.
+
+```{r}
+start.time <- Sys.time()
+triglycerides <- fread(file = "/Users/mpalma/Downloads/full_cohort/Triglycerides_INT.imputed.stats.gz", header = T)
+end.time <- Sys.time()
+
+```
+
+Ahora, hagamos una pequeña exploración de nuestro archivo:
+
+```{r}
+head(triglycerides)
+class(triglycerides)
+dim(triglycerides)
+```
+
+Como podemos ver, tenemos demasiados renglones, más de 25 millones. Las columnas de nuestro archivo:
+
+1.  CHROM
+2.  GENPOS
+3.  ID
+4.  ALLELE0
+5.  ALLELE1
+6.  A1FREQ
+7.  INFO
+8.  N
+9.  TEST
+10. BETA
+11. SE
+12. CHISQ
+13. P
+14. LOG10P
+15. EXTRA
+
+¿Para nuestro GWAS qué columnas necesitamos?
+
+-   CHROM
+-   GENPOS
+-   ID
+-   P
+
+```{r}
+triglycerides <- triglycerides[, .(CHROM, GENPOS, ID, P)]
+```
+
+Simplifiquemos los nombres de nuestras columnas
+
+```{r}
+triglycerides <- triglycerides[,.(CHR = CHROM, BP=GENPOS , SNP=ID, P)]
+```
+
+Puedes explorar setnames para maneras alternativas de renombrar
+
+Reto: ¿Cómo lo harías?
+
+Consideremos que en el caso de los humanos tenemos 22 cromosomas autosomales y cada variante tiene asociada un cromosoma y una posición en dicho cromosomas.
+
+¿Cómo hacemos que estas posiciones se puedan acomodar en el eje de las x?
+
+**Algoritmo*
+
+- Agrupar nuestros datos por cromosoma y estimar su longitud 
+- Hacer la suma acumulada de las posiciones. 
+
+Como puedes notar, no tenemos absolutamente todas las posiciones del genoma humano, pero nos es relevante la posición máxima que tenemos en los cromosomas. 
+
+### Agrupar por cromosoma y estimar la longitud
+
+```{r}
+chr_len <- triglycerides[, .(chr_len = max(BP)), by = CHR]
+```
+
+### Estimar la suma acumulada de la longitud de cromosomas
+
+```{r}
+chr_len[, tot := cumsum(as.numeric(chr_len)) - chr_len]
+```
+
+#### Añador esta informacio al data set original
+
+```{r}
+
+cum_triglycerides <- merge(triglycerides, chr_len[, .(CHR, tot)], by = "CHR")
+
+```
+
+#### Añadir la posicion acumulada a cada variante/SNP (Single Nucleotide Polymorphism)
+
+```{r}
+cum_triglycerides <- cum_triglycerides[order(CHR, BP)]
+cum_triglycerides[, BPcum := BP + tot]
+```
+
+Todo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante?
+¿Podemos muestrear al azar? Mejor usamos p-value.
+
+### Muestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value > 0.01
+```{r}
+set.seed(123) # Establecer una semilla para reproducibilidad
+sampled_high_p <- cum_triglycerides[P > 0.01][sample(.N, .N / 200)]
+low_p_data <- cum_triglycerides[P <= 0.01]
+
+# Combinar ambos conjuntos de datos
+sampled_data <- rbind(low_p_data, sampled_high_p)
+```
+ 
+## Graficación
+
+### Cargar librería
+
+```{r}
+library(ggplot2)
+library(scales)
+```
+
+Para el eje de las x hay que estimar la posición central para cada cromosoma de acuerdo a las posiciones de cada cromosoma
+
+```{r}
+axisdf <- cum_triglycerides[, .(center = (max(BPcum) + min(BPcum)) / 2), by = CHR]
+```
+
+### Manhattan plot
+
+```{r}
+Manhattan_plot <- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +
+  
+  # Graficar los puntos y azul y gris intercalado por cromosoma
+  geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=0.5) +
+  scale_color_manual(values = rep(c("grey", "skyblue"), 22 )) +
+  
+  # Personalizar ejes
+  scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center ) +
+  scale_y_continuous(expand = c(0, 0), labels=number_format(accuracy = 0.1) , limits=c(25,0), trans = "reverse")  +
+  
+  #### Añadir líneas de significancia
+  geom_hline(yintercept=-log10(1e-5), color = "black", linetype="dotted", linewidth=0.3) +
+  geom_hline(yintercept=-log10(5e-8), color = "black", linetype="dashed", linewidth=0.3) +
+  
+  #### Añadir título
+  
+  ggtitle("Triglycerides")+
+  
+  # Detalles de tema:
+  theme_bw() +
+  theme( 
+    legend.position="none",
+    panel.border = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.x =   element_blank(),
+    axis.title.x = element_blank()
+  )
+```
+
+### Guardar la imagen
+
+```{r}
+ggsave("/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png", plot = Manhattan_plot)
+```
+## Plot
+
+```{r}
+print(Manhattan_plot)
+```
+

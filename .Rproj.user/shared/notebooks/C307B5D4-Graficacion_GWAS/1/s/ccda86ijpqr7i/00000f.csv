@@ -1,0 +1,1 @@
+"0","chr_len[, tot := cumsum(as.numeric(chr_len)) - chr_len]"

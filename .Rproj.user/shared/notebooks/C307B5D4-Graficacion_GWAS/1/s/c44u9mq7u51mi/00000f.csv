@@ -1,0 +1,3 @@
+"0",""
+"0","cum_triglycerides <- merge(triglycerides, chr_len[, .(CHR, tot)], by = ""CHR"")"
+"0",""

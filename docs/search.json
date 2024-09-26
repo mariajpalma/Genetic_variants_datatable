@@ -1,0 +1,57 @@
+[
+  {
+    "objectID": "Graficacion_GWAS.html",
+    "href": "Graficacion_GWAS.html",
+    "title": "Graficación de GWAS",
+    "section": "",
+    "text": "Durante esta clase veremos como usar data.table para manejar datos de gran tamaño. Por ejemplo los summary statistics de GWAS. Los datos aquí usados se descargaron: Zenodo MXB Y son datos del artículo: Mexican Biobank advances population and medical genomics of diverse ancestries Para hacer este ejercicio sólo utilizaremos el archivo Tryglicerides_INT.imputed.stats.gz que se encuentra dentro de la carpeta full_cohort.",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html#procesamiento-de-datos",
+    "href": "Graficacion_GWAS.html#procesamiento-de-datos",
+    "title": "Graficación de GWAS",
+    "section": "Procesamiento de datos",
+    "text": "Procesamiento de datos\n\nCargar librería\n\nlibrary(data.table)\n\n\n\nLectura de archivos\nPrimero leeremos nuestro archivo comprimido, para no ocupar tanto espacio de almacenamiento en nuestras computadoras. También veremos el tiempo que tarda nuestra máquina en leer el archivo.\n\nstart.time &lt;- Sys.time()\ntriglycerides &lt;- fread(file = \"/Users/mpalma/Downloads/full_cohort/Triglycerides_INT.imputed.stats.gz\", header = T)\nend.time &lt;- Sys.time()\n\nAhora, hagamos una pequeña exploración de nuestro archivo:\n\nhead(triglycerides)\n\n   CHROM GENPOS                 ID ALLELE0 ALLELE1   A1FREQ     INFO     N   TEST       BETA        SE    CHISQ\n   &lt;int&gt;  &lt;int&gt;             &lt;char&gt;  &lt;char&gt;  &lt;char&gt;    &lt;num&gt;    &lt;num&gt; &lt;int&gt; &lt;char&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;\n1:     1  10894     chr1:10894:G:A       A       G 0.999000 0.103158  4410    ADD  1.3398800 0.8940780 2.245850\n2:     1  10915     chr1:10915:G:A       A       G 0.999357 0.143333  4410    ADD  1.0408100 0.9420580 1.220630\n3:     1  10930     chr1:10930:G:A       A       G 0.996310 0.348625  4410    ADD  0.1250350 0.2530330 0.244178\n4:     1  10989     chr1:10989:G:A       A       G 0.996707 0.255428  4410    ADD -0.1307880 0.3126760 0.174963\n5:     1  11171 chr1:11171:CCTTG:C       C   CCTTG 0.947507 0.270755  4410    ADD  0.0761543 0.0775698 0.963838\n6:     1  23197       rs1220638906       T  TTAAAA 0.992670 0.281342  4410    ADD -0.0688404 0.2004550 0.117938\n           P   LOG10P  EXTRA\n       &lt;num&gt;    &lt;num&gt; &lt;lgcl&gt;\n1: 0.1339735 0.872981     NA\n2: 0.2692372 0.569865     NA\n3: 0.6212051 0.206765     NA\n4: 0.6757390 0.170221     NA\n5: 0.3262218 0.486487     NA\n6: 0.7312822 0.135915     NA\n\nclass(triglycerides)\n\n[1] \"data.table\" \"data.frame\"\n\ndim(triglycerides)\n\n[1] 25420360       15\n\n\nComo podemos ver, tenemos demasiados renglones, más de 25 millones. Las columnas de nuestro archivo:\n\nCHROM\nGENPOS\nID\nALLELE0\nALLELE1\nA1FREQ\nINFO\nN\nTEST\nBETA\nSE\nCHISQ\nP\nLOG10P\nEXTRA\n\n¿Para nuestro GWAS qué columnas necesitamos?\n\nCHROM\nGENPOS\nID\nP\n\n\ntriglycerides &lt;- triglycerides[, .(CHROM, GENPOS, ID, P)]\n\nSimplifiquemos los nombres de nuestras columnas\n\ntriglycerides &lt;- triglycerides[,.(CHR = CHROM, BP=GENPOS , SNP=ID, P)]\n\nPuedes explorar setnames para maneras alternativas de renombrar\nReto: ¿Cómo lo harías?\nConsideremos que en el caso de los humanos tenemos 22 cromosomas autosomales y cada variante tiene asociada un cromosoma y una posición en dicho cromosomas.\n¿Cómo hacemos que estas posiciones se puedan acomodar en el eje de las x?\n**Algoritmo*\n\nAgrupar nuestros datos por cromosoma y estimar su longitud\nHacer la suma acumulada de las posiciones.\n\nComo puedes notar, no tenemos absolutamente todas las posiciones del genoma humano, pero nos es relevante la posición máxima que tenemos en los cromosomas.\n\n\nAgrupar por cromosoma y estimar la longitud\n\nchr_len &lt;- triglycerides[, .(chr_len = max(BP)), by = CHR]\n\n\n\nEstimar la suma acumulada de la longitud de cromosomas\n\nchr_len[, tot := cumsum(as.numeric(chr_len)) - chr_len]\n\n\nAñador esta informacio al data set original\n\ncum_triglycerides &lt;- merge(triglycerides, chr_len[, .(CHR, tot)], by = \"CHR\")\n\n\n\nAñadir la posicion acumulada a cada variante/SNP (Single Nucleotide Polymorphism)\n\ncum_triglycerides &lt;- cum_triglycerides[order(CHR, BP)]\ncum_triglycerides[, BPcum := BP + tot]\n\nTodo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante? ¿Podemos muestrear al azar? Mejor usamos p-value.\n\n\n\nMuestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value &gt; 0.01\n\nset.seed(123) # Establecer una semilla para reproducibilidad\nsampled_high_p &lt;- cum_triglycerides[P &gt; 0.01][sample(.N, .N / 200)]\nlow_p_data &lt;- cum_triglycerides[P &lt;= 0.01]\n\n# Combinar ambos conjuntos de datos\nsampled_data &lt;- rbind(low_p_data, sampled_high_p)",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html#graficación",
+    "href": "Graficacion_GWAS.html#graficación",
+    "title": "Graficación de GWAS",
+    "section": "Graficación",
+    "text": "Graficación\n\nCargar librería\n\nlibrary(ggplot2)\nlibrary(scales)\n\nPara el eje de las x hay que estimar la posición central para cada cromosoma de acuerdo a las posiciones de cada cromosoma\n\naxisdf &lt;- cum_triglycerides[, .(center = (max(BPcum) + min(BPcum)) / 2), by = CHR]\n\n\n\nManhattan plot\n\nManhattan_plot &lt;- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +\n  \n  # Graficar los puntos y azul y gris intercalado por cromosoma\n  geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=0.5) +\n  scale_color_manual(values = rep(c(\"grey\", \"skyblue\"), 22 )) +\n  \n  # Personalizar ejes\n  scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center ) +\n  scale_y_continuous(expand = c(0, 0), labels=number_format(accuracy = 0.1) , limits=c(25,0), trans = \"reverse\")  +\n  \n  #### Añadir líneas de significancia\n  geom_hline(yintercept=-log10(1e-5), color = \"black\", linetype=\"dotted\", linewidth=0.3) +\n  geom_hline(yintercept=-log10(5e-8), color = \"black\", linetype=\"dashed\", linewidth=0.3) +\n  \n  #### Añadir título\n  \n  ggtitle(\"Triglycerides\")+\n  \n  # Detalles de tema:\n  theme_bw() +\n  theme( \n    legend.position=\"none\",\n    panel.border = element_blank(),\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank(),\n    axis.ticks.x = element_blank(),\n    axis.text.x =   element_blank(),\n    axis.title.x = element_blank()\n  )\n\n\n\nGuardar la imagen\n\nggsave(\"/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png\", plot = Manhattan_plot)",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html#plot",
+    "href": "Graficacion_GWAS.html#plot",
+    "title": "Graficación de GWAS",
+    "section": "Plot",
+    "text": "Plot\n\nprint(Manhattan_plot)",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Index.html",
+    "href": "Index.html",
+    "title": "Repaso",
+    "section": "",
+    "text": "test &lt;- 1 +10\nprint(test)\n\n[1] 11",
+    "crumbs": [
+      "Introducción",
+      "Repaso"
+    ]
+  }
+]

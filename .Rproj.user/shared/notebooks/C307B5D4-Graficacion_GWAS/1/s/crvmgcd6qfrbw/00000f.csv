@@ -1,0 +1,1 @@
+"0","triglycerides <- triglycerides[,.(CHR = CHROM, BP=GENPOS , SNP=ID, P)]"

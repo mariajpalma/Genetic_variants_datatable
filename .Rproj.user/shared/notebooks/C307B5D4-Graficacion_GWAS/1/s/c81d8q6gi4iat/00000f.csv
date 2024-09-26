@@ -1,0 +1,2 @@
+"0","set.seed(123) # Establecer una semilla para reproducibilidad"
+"0","sampled_data <- cum_triglycerides[P > 0.01][sample(.N, .N / 200)]"

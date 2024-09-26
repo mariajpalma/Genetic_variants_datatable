@@ -1,0 +1,15 @@
+{
+  "hash": "9bf8eec3bd4161243d80c48a894ec68e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Repaso\"\n---\n\n::: {.cell}\n\n```{.r .cell-code}\ntest <- 1 +10\nprint(test)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 11\n```\n\n\n:::\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

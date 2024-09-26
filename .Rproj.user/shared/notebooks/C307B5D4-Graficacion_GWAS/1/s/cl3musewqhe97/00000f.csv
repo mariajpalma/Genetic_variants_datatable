@@ -1,0 +1,8 @@
+"0","library(data.table)"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","data.table 1.16.0 using 4 threads (see ?getDTthreads).  "
+"2","Latest news: r-datatable.com
+"

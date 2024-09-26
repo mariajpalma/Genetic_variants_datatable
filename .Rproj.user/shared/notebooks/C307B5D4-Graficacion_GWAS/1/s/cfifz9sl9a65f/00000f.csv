@@ -1,0 +1,2 @@
+"0","cum_triglycerides <- cum_triglycerides[order(CHR, BP)]"
+"0","cum_triglycerides[, BPcum := BP + tot]"
