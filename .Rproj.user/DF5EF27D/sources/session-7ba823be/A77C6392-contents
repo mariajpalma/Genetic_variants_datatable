@@ -45,6 +45,7 @@ format:
     code-wrap: true
     message: false
     warning: false
+    eval: false
     fig-height: 8
     fig-width: 8
     grid: 
