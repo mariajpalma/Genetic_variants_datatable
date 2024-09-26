@@ -3,7 +3,7 @@
     "path": "~/Documents/Genetic_variants_data.table/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
-    "hash": "0",
+    "hash": "3358640972",
     "contents": "",
     "dirty": false,
     "created": 1727387346757.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "32,11",
-        "scrollLine": "20"
+        "cursorPosition": "46,18",
+        "scrollLine": "41"
     },
     "folds": "",
-    "lastKnownWriteTime": 1727387319,
+    "lastKnownWriteTime": 1727387899,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1727387319,
+    "last_content_update": 1727387899450,
     "read_only": false,
     "read_only_alternatives": []
 }

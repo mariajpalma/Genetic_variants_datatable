@@ -260,9 +260,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Ahora, hagamos una pequeña exploración de nuestro archivo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(triglycerides)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(triglycerides)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   CHROM GENPOS                 ID ALLELE0 ALLELE1   A1FREQ     INFO     N   TEST       BETA        SE    CHISQ
+   &lt;int&gt;  &lt;int&gt;             &lt;char&gt;  &lt;char&gt;  &lt;char&gt;    &lt;num&gt;    &lt;num&gt; &lt;int&gt; &lt;char&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;
+1:     1  10894     chr1:10894:G:A       A       G 0.999000 0.103158  4410    ADD  1.3398800 0.8940780 2.245850
+2:     1  10915     chr1:10915:G:A       A       G 0.999357 0.143333  4410    ADD  1.0408100 0.9420580 1.220630
+3:     1  10930     chr1:10930:G:A       A       G 0.996310 0.348625  4410    ADD  0.1250350 0.2530330 0.244178
+4:     1  10989     chr1:10989:G:A       A       G 0.996707 0.255428  4410    ADD -0.1307880 0.3126760 0.174963
+5:     1  11171 chr1:11171:CCTTG:C       C   CCTTG 0.947507 0.270755  4410    ADD  0.0761543 0.0775698 0.963838
+6:     1  23197       rs1220638906       T  TTAAAA 0.992670 0.281342  4410    ADD -0.0688404 0.2004550 0.117938
+           P   LOG10P  EXTRA
+       &lt;num&gt;    &lt;num&gt; &lt;lgcl&gt;
+1: 0.1339735 0.872981     NA
+2: 0.2692372 0.569865     NA
+3: 0.6212051 0.206765     NA
+4: 0.6757390 0.170221     NA
+5: 0.3262218 0.486487     NA
+6: 0.7312822 0.135915     NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.table" "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25420360       15</code></pre>
+</div>
 </div>
 <p>Como podemos ver, tenemos demasiados renglones, más de 25 millones. Las columnas de nuestro archivo:</p>
 <ol type="1">
@@ -290,11 +314,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>P</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>triglycerides <span class="ot">&lt;-</span> triglycerides[, .(CHROM, GENPOS, ID, P)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>triglycerides <span class="ot">&lt;-</span> triglycerides[, .(CHROM, GENPOS, ID, P)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Simplifiquemos los nombres de nuestras columnas</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>triglycerides <span class="ot">&lt;-</span> triglycerides[,.(<span class="at">CHR =</span> CHROM, <span class="at">BP=</span>GENPOS , <span class="at">SNP=</span>ID, P)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>triglycerides <span class="ot">&lt;-</span> triglycerides[,.(<span class="at">CHR =</span> CHROM, <span class="at">BP=</span>GENPOS , <span class="at">SNP=</span>ID, P)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Puedes explorar setnames para maneras alternativas de renombrar</p>
 <p>Reto: ¿Cómo lo harías?</p>
@@ -310,25 +334,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="agrupar-por-cromosoma-y-estimar-la-longitud" class="level3">
 <h3 class="anchored" data-anchor-id="agrupar-por-cromosoma-y-estimar-la-longitud">Agrupar por cromosoma y estimar la longitud</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>chr_len <span class="ot">&lt;-</span> triglycerides[, .(<span class="at">chr_len =</span> <span class="fu">max</span>(BP)), by <span class="ot">=</span> CHR]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>chr_len <span class="ot">&lt;-</span> triglycerides[, .(<span class="at">chr_len =</span> <span class="fu">max</span>(BP)), by <span class="ot">=</span> CHR]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="estimar-la-suma-acumulada-de-la-longitud-de-cromosomas" class="level3">
 <h3 class="anchored" data-anchor-id="estimar-la-suma-acumulada-de-la-longitud-de-cromosomas">Estimar la suma acumulada de la longitud de cromosomas</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>chr_len[, tot <span class="sc">:</span><span class="er">=</span> <span class="fu">cumsum</span>(<span class="fu">as.numeric</span>(chr_len)) <span class="sc">-</span> chr_len]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>chr_len[, tot <span class="sc">:</span><span class="er">=</span> <span class="fu">cumsum</span>(<span class="fu">as.numeric</span>(chr_len)) <span class="sc">-</span> chr_len]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="añador-esta-informacio-al-data-set-original" class="level4">
 <h4 class="anchored" data-anchor-id="añador-esta-informacio-al-data-set-original">Añador esta informacio al data set original</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cum_triglycerides <span class="ot">&lt;-</span> <span class="fu">merge</span>(triglycerides, chr_len[, .(CHR, tot)], <span class="at">by =</span> <span class="st">"CHR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cum_triglycerides <span class="ot">&lt;-</span> <span class="fu">merge</span>(triglycerides, chr_len[, .(CHR, tot)], <span class="at">by =</span> <span class="st">"CHR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="añadir-la-posicion-acumulada-a-cada-variantesnp-single-nucleotide-polymorphism" class="level4">
 <h4 class="anchored" data-anchor-id="añadir-la-posicion-acumulada-a-cada-variantesnp-single-nucleotide-polymorphism">Añadir la posicion acumulada a cada variante/SNP (Single Nucleotide Polymorphism)</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cum_triglycerides <span class="ot">&lt;-</span> cum_triglycerides[<span class="fu">order</span>(CHR, BP)]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cum_triglycerides[, BPcum <span class="sc">:</span><span class="er">=</span> BP <span class="sc">+</span> tot]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cum_triglycerides <span class="ot">&lt;-</span> cum_triglycerides[<span class="fu">order</span>(CHR, BP)]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cum_triglycerides[, BPcum <span class="sc">:</span><span class="er">=</span> BP <span class="sc">+</span> tot]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Todo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante? ¿Podemos muestrear al azar? Mejor usamos p-value.</p>
 </section>
@@ -336,12 +360,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="muestrear-sin-remplazo-de-manera-aleatoria-1-de-cada-200-variantes-con-p-value-0.01" class="level3">
 <h3 class="anchored" data-anchor-id="muestrear-sin-remplazo-de-manera-aleatoria-1-de-cada-200-variantes-con-p-value-0.01">Muestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value &gt; 0.01</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Establecer una semilla para reproducibilidad</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sampled_high_p <span class="ot">&lt;-</span> cum_triglycerides[P <span class="sc">&gt;</span> <span class="fl">0.01</span>][<span class="fu">sample</span>(.N, .N <span class="sc">/</span> <span class="dv">200</span>)]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>low_p_data <span class="ot">&lt;-</span> cum_triglycerides[P <span class="sc">&lt;=</span> <span class="fl">0.01</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinar ambos conjuntos de datos</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>sampled_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(low_p_data, sampled_high_p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Establecer una semilla para reproducibilidad</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sampled_high_p <span class="ot">&lt;-</span> cum_triglycerides[P <span class="sc">&gt;</span> <span class="fl">0.01</span>][<span class="fu">sample</span>(.N, .N <span class="sc">/</span> <span class="dv">200</span>)]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>low_p_data <span class="ot">&lt;-</span> cum_triglycerides[P <span class="sc">&lt;=</span> <span class="fl">0.01</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinar ambos conjuntos de datos</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>sampled_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(low_p_data, sampled_high_p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -350,59 +374,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cargar-librería-1" class="level3">
 <h3 class="anchored" data-anchor-id="cargar-librería-1">Cargar librería</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Para el eje de las x hay que estimar la posición central para cada cromosoma de acuerdo a las posiciones de cada cromosoma</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>axisdf <span class="ot">&lt;-</span> cum_triglycerides[, .(<span class="at">center =</span> (<span class="fu">max</span>(BPcum) <span class="sc">+</span> <span class="fu">min</span>(BPcum)) <span class="sc">/</span> <span class="dv">2</span>), by <span class="ot">=</span> CHR]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>axisdf <span class="ot">&lt;-</span> cum_triglycerides[, .(<span class="at">center =</span> (<span class="fu">max</span>(BPcum) <span class="sc">+</span> <span class="fu">min</span>(BPcum)) <span class="sc">/</span> <span class="dv">2</span>), by <span class="ot">=</span> CHR]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="manhattan-plot" class="level3">
 <h3 class="anchored" data-anchor-id="manhattan-plot">Manhattan plot</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Manhattan_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sampled_data, <span class="fu">aes</span>(<span class="at">x=</span>BPcum, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(P))) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Graficar los puntos y azul y gris intercalado por cromosoma</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="fu">aes</span>(<span class="at">color=</span><span class="fu">as.factor</span>(CHR)), <span class="at">alpha=</span><span class="fl">0.8</span>, <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"skyblue"</span>), <span class="dv">22</span> )) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Personalizar ejes</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>( <span class="at">label =</span> axisdf<span class="sc">$</span>CHR, <span class="at">breaks=</span> axisdf<span class="sc">$</span>center ) <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">labels=</span><span class="fu">number_format</span>(<span class="at">accuracy =</span> <span class="fl">0.1</span>) , <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">0</span>), <span class="at">trans =</span> <span class="st">"reverse"</span>)  <span class="sc">+</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Añadir líneas de significancia</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">1e-5</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype=</span><span class="st">"dotted"</span>, <span class="at">linewidth=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5e-8</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">linewidth=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Añadir título</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Triglycerides"</span>)<span class="sc">+</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Detalles de tema:</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( </span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span>   <span class="fu">element_blank</span>(),</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Manhattan_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sampled_data, <span class="fu">aes</span>(<span class="at">x=</span>BPcum, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(P))) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Graficar los puntos y azul y gris intercalado por cromosoma</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="fu">aes</span>(<span class="at">color=</span><span class="fu">as.factor</span>(CHR)), <span class="at">alpha=</span><span class="fl">0.8</span>, <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"skyblue"</span>), <span class="dv">22</span> )) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Personalizar ejes</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>( <span class="at">label =</span> axisdf<span class="sc">$</span>CHR, <span class="at">breaks=</span> axisdf<span class="sc">$</span>center ) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">labels=</span><span class="fu">number_format</span>(<span class="at">accuracy =</span> <span class="fl">0.1</span>) , <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">0</span>), <span class="at">trans =</span> <span class="st">"reverse"</span>)  <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Añadir líneas de significancia</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">1e-5</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype=</span><span class="st">"dotted"</span>, <span class="at">linewidth=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">5e-8</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>, <span class="at">linewidth=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Añadir título</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Triglycerides"</span>)<span class="sc">+</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Detalles de tema:</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( </span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span>   <span class="fu">element_blank</span>(),</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="guardar-la-imagen" class="level3">
 <h3 class="anchored" data-anchor-id="guardar-la-imagen">Guardar la imagen</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png"</span>, <span class="at">plot =</span> Manhattan_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png"</span>, <span class="at">plot =</span> Manhattan_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="plot" class="level2">
 <h2 class="anchored" data-anchor-id="plot">Plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Manhattan_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Manhattan_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Graficacion_GWAS_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 
 
