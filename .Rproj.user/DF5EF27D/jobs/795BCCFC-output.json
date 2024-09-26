@@ -1,0 +1,5 @@
+[1,"==> quarto preview index.qmd --to html --no-watch-inputs --no-browse\n\n"]
+[1,"\u001B[1mpandoc \u001B[22m\n  to: html\n  output-file: index.html\n  standalone: true\n  section-divs: true\n  html-math-method: mathjax\n  wrap: none\n  default-image-extension: png\n  css:\n    - styles.css\n  toc: true\n  \n\u001B[1mmetadata\u001B[22m\n  document-css: false\n  link-citations: true\n  date-format: long\n  lang: en\n  knitr:\n    opts_chunk:\n      R.options:\n        width: 120\n  theme:\n    light: flatly\n    dark: darkly\n  code-wrap: true\n  message: false\n  grid:\n    body-width: 1200px\n    sidebar-width: 250px\n    margin-width: 200px\n    gutter-width: 0.8em\n  fontsize: 14pt\n  title: Repaso\n  editor: visual\n  \n"]
+[1,"Output created: docs/index.html\n\n\u001B[1m\u001B[34mPreparing to preview\u001B[39m\u001B[22m\n\n\u001B[32mWatching files for changes\u001B[39m\n\u001B[32mBrowse at \u001B[39m\u001B[4m\u001B[32mhttp://localhost:7037/\u001B[39m\u001B[24m\n"]
+[1,"\u001B[32mGET: /\u001B[39m\n"]
+[1,"\u001B[31m  /styles.css (404: Not Found)\u001B[39m\n"]
