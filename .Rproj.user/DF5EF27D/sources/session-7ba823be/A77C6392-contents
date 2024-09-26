@@ -26,7 +26,7 @@ website:
     contents:
       - section: "Introducción"
         contents:
-        - Index.qmd 
+        - index.qmd 
 
       - section: "Ejercicios"
         contents:

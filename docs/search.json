@@ -44,8 +44,8 @@
     ]
   },
   {
-    "objectID": "Index.html",
-    "href": "Index.html",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "Repaso",
     "section": "",
     "text": "test &lt;- 1 +10\nprint(test)\n\n[1] 11",
