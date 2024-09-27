@@ -76,12 +76,12 @@ Consideremos que en el caso de los humanos tenemos 22 cromosomas autosomales y c
 
 ¿Cómo hacemos que estas posiciones se puedan acomodar en el eje de las x?
 
-**Algoritmo*
+**Algoritmo**
 
-- Agrupar nuestros datos por cromosoma y estimar su longitud 
-- Hacer la suma acumulada de las posiciones. 
+-   Agrupar nuestros datos por cromosoma y estimar su longitud
+-   Hacer la suma acumulada de las posiciones.
 
-Como puedes notar, no tenemos absolutamente todas las posiciones del genoma humano, pero nos es relevante la posición máxima que tenemos en los cromosomas. 
+Como puedes notar, no tenemos absolutamente todas las posiciones del genoma humano, pero nos es relevante la posición máxima que tenemos en los cromosomas.
 
 ### Agrupar por cromosoma y estimar la longitud
 
@@ -110,10 +110,10 @@ cum_triglycerides <- cum_triglycerides[order(CHR, BP)]
 cum_triglycerides[, BPcum := BP + tot]
 ```
 
-Todo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante?
-¿Podemos muestrear al azar? Mejor usamos p-value.
+Todo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante? ¿Podemos muestrear al azar? Mejor usamos p-value.
 
-### Muestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value > 0.01
+### Muestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value \> 0.01
+
 ```{r}
 set.seed(123) # Establecer una semilla para reproducibilidad
 sampled_high_p <- cum_triglycerides[P > 0.01][sample(.N, .N / 200)]
@@ -122,7 +122,7 @@ low_p_data <- cum_triglycerides[P <= 0.01]
 # Combinar ambos conjuntos de datos
 sampled_data <- rbind(low_p_data, sampled_high_p)
 ```
- 
+
 ## Graficación
 
 ### Cargar librería
@@ -177,9 +177,11 @@ Manhattan_plot <- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +
 ```{r}
 ggsave("/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png", plot = Manhattan_plot)
 ```
+
 ## Plot
 
 ```{r}
 print(Manhattan_plot)
 ```
 
+Ahora te toca a ti, realiza una gráfica similar para otro trait, en esta ocasión que el eje y no esté invertido y se muestre el número de cromosoma en el eje x. 

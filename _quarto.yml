@@ -26,7 +26,8 @@ website:
     contents:
       - section: "Introducción"
         contents:
-        - index.qmd 
+        - index.qmd
+        - GWAS.qmd
 
       - section: "Ejercicios"
         contents:

@@ -2,3 +2,11 @@
 title: "Repaso"
 editor: visual
 ---
+
+Primero recordemos algunas de las cosas que vieron con Sofía en las clases pasadas y que usaremos durante esta clase.
+
+1. [Sintaxis](https://sofiazorrilla.github.io/data.table_long/tema1.html)
+2. Utilizamos **.()** como un shortcut para list()
+3. El símbolo **:=** se usa pra crear o modificar columnas dentro del objeto.
+4. La función merge sirve para unir 2 objetos data.table
+5. **.N** significa el número de renglones o instancias del objeto data.table
