@@ -16,7 +16,7 @@ website:
       - icon: github
         menu:
           - text: Source Code
-            url: https://github.com/mariajpalma/Data.table_genetic_variants
+            url: https://github.com/mariajpalma/Genetic_variants_datatable.git
             
   sidebar:
     style: "floating"
