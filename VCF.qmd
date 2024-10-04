@@ -1,0 +1,48 @@
+---
+title: "VCF format"
+editor: visual
+---
+## ¿Qué es un VCF?
+
+Un archivo VCF (Variant Call Format) es un formato estándar utilizado en bioinformática para almacenar información sobre variantes genéticas.
+
+1. Estructura del Archivo:
+
+**Encabezados:** Los archivos VCF comienzan con líneas de encabezado que comienzan con el símbolo #. Estas líneas incluyen información sobre el archivo, las muestras y los formatos de los datos. La última línea de encabezado, que no comienza con #, define las columnas de datos.
+
+**Datos:** Las filas siguientes contienen datos sobre cada variante, donde cada fila representa una variante específica y sus atributos.
+
+2. Columnas Principales:
+
+**CHROM:** El cromosoma donde se encuentra la variante. 
+
+**POS:** La posición de la variante en el cromosoma.
+
+**ID:** Un identificador para la variante (puede ser un identificador de referencia o . si no se proporciona uno). 
+
+**REF:** La secuencia de nucleótidos de referencia en esa posición.
+
+**ALT:** Las secuencias alternativas presentes en esa posición (pueden ser múltiples).
+
+**QUAL:** Un valor que representa la calidad de la llamada de variante.
+
+**FILTER:** Indica si la variante ha pasado ciertos filtros de calidad.
+
+**INFO:** Contiene información adicional sobre la variante, como la frecuencia alélica, el efecto biológico, etc.
+
+**FORMAT:** Define el formato de los genotipos en las muestras.
+
+
+## ¿Qué es un SNP (Single Nucleotide Polymorphism)?
+
+Una variante de un único nucleótido, aunque generalmente este también tiene que tener cierta frecuencia y así se distingue de una SNV (Single Nucleotide Variant)
+
+## ¿Qué es el proyecto de 1000 genomas?
+
+El proyecto de 1000 genomes fue un esfuerzo internacional para secuenciar al menos 1000 voluntarios de todo el mundo. [IGSR](https://www.internationalgenome.org/data-portal/population)
+
+## Plink
+
+Una herramienta muy poderosa para procesar datos genéticos. Es un programa en línea de comandos y tiene muchísimas opciones. Puedes encontrar su manual aquí: [Plink](https://www.cog-genomics.org/plink/2.0/)
+
+

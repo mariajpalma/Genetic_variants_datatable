@@ -1,5 +1,5 @@
 "0","start.time <- Sys.time()"
-"0","triglycerides <- fread(file = ""/Users/mpalma/Downloads/full_cohort/Triglycerides_INT.imputed.stats.gz"", header = T)"
+"0","triglycerides <- fread(file = ""/Users/mpalma/Downloads/full_cohort/Glucose_INT.imputed.stats.gz"", header = T)"
 "2","|--------------------------------------------------|
 |"
 "2","="

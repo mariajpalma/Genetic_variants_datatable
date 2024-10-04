@@ -1,5 +1,126 @@
 [
   {
+    "objectID": "VCF.html",
+    "href": "VCF.html",
+    "title": "VCF format",
+    "section": "",
+    "text": "Un archivo VCF (Variant Call Format) es un formato estándar utilizado en bioinformática para almacenar información sobre variantes genéticas.\n\nEstructura del Archivo:\n\nEncabezados: Los archivos VCF comienzan con líneas de encabezado que comienzan con el símbolo #. Estas líneas incluyen información sobre el archivo, las muestras y los formatos de los datos. La última línea de encabezado, que no comienza con #, define las columnas de datos.\nDatos: Las filas siguientes contienen datos sobre cada variante, donde cada fila representa una variante específica y sus atributos.\n\nColumnas Principales:\n\nCHROM: El cromosoma donde se encuentra la variante.\nPOS: La posición de la variante en el cromosoma.\nID: Un identificador para la variante (puede ser un identificador de referencia o . si no se proporciona uno).\nREF: La secuencia de nucleótidos de referencia en esa posición.\nALT: Las secuencias alternativas presentes en esa posición (pueden ser múltiples).\nQUAL: Un valor que representa la calidad de la llamada de variante.\nFILTER: Indica si la variante ha pasado ciertos filtros de calidad.\nINFO: Contiene información adicional sobre la variante, como la frecuencia alélica, el efecto biológico, etc.\nFORMAT: Define el formato de los genotipos en las muestras.",
+    "crumbs": [
+      "Introducción",
+      "VCF format"
+    ]
+  },
+  {
+    "objectID": "VCF.html#qué-es-un-vcf",
+    "href": "VCF.html#qué-es-un-vcf",
+    "title": "VCF format",
+    "section": "",
+    "text": "Un archivo VCF (Variant Call Format) es un formato estándar utilizado en bioinformática para almacenar información sobre variantes genéticas.\n\nEstructura del Archivo:\n\nEncabezados: Los archivos VCF comienzan con líneas de encabezado que comienzan con el símbolo #. Estas líneas incluyen información sobre el archivo, las muestras y los formatos de los datos. La última línea de encabezado, que no comienza con #, define las columnas de datos.\nDatos: Las filas siguientes contienen datos sobre cada variante, donde cada fila representa una variante específica y sus atributos.\n\nColumnas Principales:\n\nCHROM: El cromosoma donde se encuentra la variante.\nPOS: La posición de la variante en el cromosoma.\nID: Un identificador para la variante (puede ser un identificador de referencia o . si no se proporciona uno).\nREF: La secuencia de nucleótidos de referencia en esa posición.\nALT: Las secuencias alternativas presentes en esa posición (pueden ser múltiples).\nQUAL: Un valor que representa la calidad de la llamada de variante.\nFILTER: Indica si la variante ha pasado ciertos filtros de calidad.\nINFO: Contiene información adicional sobre la variante, como la frecuencia alélica, el efecto biológico, etc.\nFORMAT: Define el formato de los genotipos en las muestras.",
+    "crumbs": [
+      "Introducción",
+      "VCF format"
+    ]
+  },
+  {
+    "objectID": "VCF.html#qué-es-un-snp-single-nucleotide-polymorphism",
+    "href": "VCF.html#qué-es-un-snp-single-nucleotide-polymorphism",
+    "title": "VCF format",
+    "section": "¿Qué es un SNP (Single Nucleotide Polymorphism)?",
+    "text": "¿Qué es un SNP (Single Nucleotide Polymorphism)?\nUna variante de un único nucleótido, aunque generalmente este también tiene que tener cierta frecuencia y así se distingue de una SNV (Single Nucleotide Variant)",
+    "crumbs": [
+      "Introducción",
+      "VCF format"
+    ]
+  },
+  {
+    "objectID": "VCF.html#qué-es-el-proyecto-de-1000-genomas",
+    "href": "VCF.html#qué-es-el-proyecto-de-1000-genomas",
+    "title": "VCF format",
+    "section": "¿Qué es el proyecto de 1000 genomas?",
+    "text": "¿Qué es el proyecto de 1000 genomas?\nEl proyecto de 1000 genomes fue un esfuerzo internacional para secuenciar al menos 1000 voluntarios de todo el mundo. IGSR",
+    "crumbs": [
+      "Introducción",
+      "VCF format"
+    ]
+  },
+  {
+    "objectID": "VCF.html#plink",
+    "href": "VCF.html#plink",
+    "title": "VCF format",
+    "section": "Plink",
+    "text": "Plink\nUna herramienta muy poderosa para procesar datos genéticos. Es un programa en línea de comandos y tiene muchísimas opciones. Puedes encontrar su manual aquí: Plink",
+    "crumbs": [
+      "Introducción",
+      "VCF format"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html",
+    "href": "Graficacion_GWAS.html",
+    "title": "Graficación de GWAS",
+    "section": "",
+    "text": "Durante esta clase veremos como usar data.table para manejar datos de gran tamaño. Por ejemplo los summary statistics de GWAS. Los datos aquí usados se descargaron: Zenodo MXB Y son datos del artículo: Mexican Biobank advances population and medical genomics of diverse ancestries Para hacer este ejercicio sólo utilizaremos el archivo Tryglicerides_INT.imputed.stats.gz que se encuentra dentro de la carpeta full_cohort.",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html#procesamiento-de-datos",
+    "href": "Graficacion_GWAS.html#procesamiento-de-datos",
+    "title": "Graficación de GWAS",
+    "section": "Procesamiento de datos",
+    "text": "Procesamiento de datos\n\nCargar librería\n\nlibrary(data.table)\n\n\n\nLectura de archivos\nPrimero leeremos nuestro archivo comprimido, para no ocupar tanto espacio de almacenamiento en nuestras computadoras. También veremos el tiempo que tarda nuestra máquina en leer el archivo.\n\nstart.time &lt;- Sys.time()\ntriglycerides &lt;- fread(file = \"/Users/mpalma/Downloads/full_cohort/Glucose_INT.imputed.stats.gz\", header = T)\nend.time &lt;- Sys.time()\n\nAhora, hagamos una pequeña exploración de nuestro archivo:\n\nhead(triglycerides)\n\n   CHROM GENPOS                 ID ALLELE0 ALLELE1   A1FREQ     INFO     N   TEST       BETA        SE    CHISQ\n   &lt;int&gt;  &lt;int&gt;             &lt;char&gt;  &lt;char&gt;  &lt;char&gt;    &lt;num&gt;    &lt;num&gt; &lt;int&gt; &lt;char&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;\n1:     1  10894     chr1:10894:G:A       A       G 0.998977 0.103625  4418    ADD  0.3059710 0.9390870 0.106157\n2:     1  10915     chr1:10915:G:A       A       G 0.999336 0.143104  4418    ADD  0.3243080 0.9879230 0.107763\n3:     1  10930     chr1:10930:G:A       A       G 0.996291 0.348130  4418    ADD  0.4716960 0.2689780 3.075330\n4:     1  10989     chr1:10989:G:A       A       G 0.996688 0.256007  4418    ADD -0.1462470 0.3317240 0.194366\n5:     1  11171 chr1:11171:CCTTG:C       C   CCTTG 0.947664 0.270913  4418    ADD  0.0323001 0.0822278 0.154301\n6:     1  23197       rs1220638906       T  TTAAAA 0.992480 0.289927  4418    ADD -0.2011720 0.2076770 0.938331\n            P   LOG10P  EXTRA\n        &lt;num&gt;    &lt;num&gt; &lt;lgcl&gt;\n1: 0.74456223 0.128099     NA\n2: 0.74270612 0.129183     NA\n3: 0.07948771 1.099700     NA\n4: 0.65930748 0.180912     NA\n5: 0.69445802 0.158354     NA\n6: 0.33270705 0.477938     NA\n\nclass(triglycerides)\n\n[1] \"data.table\" \"data.frame\"\n\ndim(triglycerides)\n\n[1] 25454794       15\n\n\nComo podemos ver, tenemos demasiados renglones, más de 25 millones. Las columnas de nuestro archivo:\n\nCHROM\nGENPOS\nID\nALLELE0\nALLELE1\nA1FREQ\nINFO\nN\nTEST\nBETA\nSE\nCHISQ\nP\nLOG10P\nEXTRA\n\n¿Para nuestro GWAS qué columnas necesitamos?\n\nCHROM\nGENPOS\nID\nP\n\n\ntriglycerides &lt;- triglycerides[, .(CHROM, GENPOS, ID, P)]\n\nSimplifiquemos los nombres de nuestras columnas\n\ntriglycerides &lt;- triglycerides[,.(CHR = CHROM, BP=GENPOS , SNP=ID, P)]\n\nPuedes explorar setnames para maneras alternativas de renombrar\nReto: ¿Cómo lo harías?\nConsideremos que en el caso de los humanos tenemos 22 cromosomas autosomales y cada variante tiene asociada un cromosoma y una posición en dicho cromosomas.\n¿Cómo hacemos que estas posiciones se puedan acomodar en el eje de las x?\nAlgoritmo\n\nAgrupar nuestros datos por cromosoma y estimar su longitud\nHacer la suma acumulada de las posiciones.\n\nComo puedes notar, no tenemos absolutamente todas las posiciones del genoma humano, pero nos es relevante la posición máxima que tenemos en los cromosomas.\n\n\nAgrupar por cromosoma y estimar la longitud\n\nchr_len &lt;- triglycerides[, .(chr_len = max(BP)), by = CHR]\n\n\n\nEstimar la suma acumulada de la longitud de cromosomas\n\nchr_len[, tot := cumsum(as.numeric(chr_len)) - chr_len]\n\n\nAñador esta informacio al data set original\n\ncum_triglycerides &lt;- merge(triglycerides, chr_len[, .(CHR, tot)], by = \"CHR\")\n\n\n\nAñadir la posicion acumulada a cada variante/SNP (Single Nucleotide Polymorphism)\n\ncum_triglycerides &lt;- cum_triglycerides[order(CHR, BP)]\ncum_triglycerides[, BPcum := BP + tot]\n\nTodo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante? ¿Podemos muestrear al azar? Mejor usamos p-value.\n\n\n\nMuestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value &gt; 0.01\n\nset.seed(123) # Establecer una semilla para reproducibilidad\nsampled_high_p &lt;- cum_triglycerides[P &gt; 0.01][sample(.N, .N / 200)]\nlow_p_data &lt;- cum_triglycerides[P &lt;= 0.01]\n\n# Combinar ambos conjuntos de datos\nsampled_data &lt;- rbind(low_p_data, sampled_high_p)",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html#graficación",
+    "href": "Graficacion_GWAS.html#graficación",
+    "title": "Graficación de GWAS",
+    "section": "Graficación",
+    "text": "Graficación\n\nCargar librería\n\nlibrary(ggplot2)\nlibrary(scales)\n\nPara el eje de las x hay que estimar la posición central para cada cromosoma de acuerdo a las posiciones de cada cromosoma\n\naxisdf &lt;- cum_triglycerides[, .(center = (max(BPcum) + min(BPcum)) / 2), by = CHR]\n\n\n\nManhattan plot\n\nManhattan_plot &lt;- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +\n  \n  # Graficar los puntos y azul y gris intercalado por cromosoma\n  geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=0.5) +\n  scale_color_manual(values = rep(c(\"grey\", \"skyblue\"), 22 )) +\n  \n  # Personalizar ejes\n  scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center ) +\n  scale_y_continuous(expand = c(0, 0), labels=number_format(accuracy = 0.1) , limits=c(0,25))  +\n  \n  #### Añadir líneas de significancia\n  geom_hline(yintercept=-log10(1e-5), color = \"black\", linetype=\"dotted\", linewidth=0.3) +\n  geom_hline(yintercept=-log10(5e-8), color = \"black\", linetype=\"dashed\", linewidth=0.3) +\n  \n  #### Añadir título\n  \n  ggtitle(\"Glucose\")+\n  \n  # Detalles de tema:\n  theme_bw() +\n  theme( \n    legend.position=\"none\",\n    panel.border = element_blank(),\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank(),\n    #axis.ticks.x = element_blank(),\n    #axis.text.x =   element_blank(),\n    axis.title.x = element_blank()\n  )\n\n\n\nGuardar la imagen\n\nggsave(\"/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png\", plot = Manhattan_plot)",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "Graficacion_GWAS.html#plot",
+    "href": "Graficacion_GWAS.html#plot",
+    "title": "Graficación de GWAS",
+    "section": "Plot",
+    "text": "Plot\n\nprint(Manhattan_plot)\n\n\n\n\n\n\n\n\nAhora te toca a ti, realiza una gráfica similar para otro trait, en esta ocasión que el eje y no esté invertido y se muestre el número de cromosoma en el eje x.",
+    "crumbs": [
+      "Ejercicios",
+      "Graficación de GWAS"
+    ]
+  },
+  {
+    "objectID": "VCF_filters.html",
+    "href": "VCF_filters.html",
+    "title": "Filtrado_variantes",
+    "section": "",
+    "text": "Cargar librería\n\nlibrary(data.table)\n\n\n\nLeer el archivo vcf del cromosoma 22, pero sólo unas muestras y saltando unas líneas\n\nvcf_chr22 &lt;- fread(\"ALL.chr22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz\", \n                   skip = \"#CHROM\", \n                   na.strings = \".\", \n                   select = c(1,2,4,5,sample(x = c(10:2513), size = 100, replace = FALSE)))\n\n\n\nRenombrar y organizar columnas\n\nsetnames(vcf_chr22, \"#CHROM\", \"CHROM\")\nvcf_chr22[, ID := paste(CHROM, POS, sep = \"_\")]\nsetcolorder(vcf_chr22, c(colnames(vcf_chr22)[1:2], \"ID\", colnames(vcf_chr22)[3:(ncol(vcf_chr22) - 1)]))\n\n\n\nQuitar variantes que sólo tengan alelo alternativo, es decir que no sean monomorficas, así como sólo quedarnos con variantes de un único nucleótido.\n\nvcf_chr22 &lt;- vcf_chr22[!is.na(ALT)]\nvcf_chr22 &lt;- vcf_chr22[grepl(\"^[ATCG]$\", ALT)]\nvcf_chr22 &lt;- vcf_chr22[grepl(\"^[ATCG]$\", REF)]\n\n\n\nQuitar variantes con más del 5% de datos faltantes\n\ngenotype_cols &lt;- names(vcf_chr22)[6:ncol(vcf_chr22)] # columns with genotype data\n\n# Create a temporary column for counting missing genotypes\nvcf_chr22[, missing_count := rowSums(.SD == \".\", na.rm = TRUE), .SDcols = genotype_cols]\n\n# Calculate total number of samples (excluding the fixed columns)\nnum_samples &lt;- length(genotype_cols)\n\n# Calculate the percentage of missing data\nvcf_chr22[, missing_pct := missing_count / (num_samples * 2)]  # Each sample has two alleles\n\n# Keep rows with less than 5% missing data\nvcf_chr22 &lt;- vcf_chr22[missing_pct &lt; 0.05]\n\n# Optionally remove the temporary columns\nvcf_chr22[, `:=`(missing_count = NULL, missing_pct = NULL)]\n\n\n\nQuitar muestras con más del 5% de datos faltantes\n\n#Identify individuals with &lt; 5% missing data\nmissing_counts &lt;- vcf_chr22[, lapply(.SD, function(x) sum(x == \".\")), .SDcols = genotype_cols]\n\n# Calculate total number of variants\ntotal_variants &lt;- nrow(vcf_chr22)\n\n# Calculate percentage of missing data for each individual\nmissing_pct &lt;- colSums(missing_counts) / total_variants\n\n# Identify individuals to keep (&lt; 5% missing data)\nindividuals_to_keep &lt;- names(missing_pct[missing_pct &lt; 0.05])\n\n# Filter the dataset to keep only relevant columns\ninfo &lt;- c(\"CHROM\", \"POS\", \"ID\", \"REF\", \"ALT\")\ninfo_ikeep &lt;- c(info, individuals_to_keep)\nvcf_chr22 &lt;- vcf_chr22[, ..info_ikeep]\n\n\n\n¿Cómo traducimos los genotipos a un número?\n\nvcf_chr22[, (genotype_cols) := lapply(.SD, function(gt) {\n  # Split the genotype string (e.g., \"0|1\") and count the number of '1's\n  sapply(strsplit(gt, \"\\\\|\"), function(alleles) sum(alleles == \"1\", na.rm = TRUE))\n}), .SDcols = individuals_to_keep]\n\n\n\n¿Qué sabemos sobre nuestras muestras?\nEn esta ocasión sólo mantendremos la información sobre el cohort al que pertenecen\n\nmetadata &lt;- fread(\"igsr_samples_1000G.tsv\")\nsetnames(metadata, \"Sample name\", \"Sample_name\")\nsetnames(metadata, \"Population code\", \"Population_code\")\nmetadata &lt;- metadata[, .(Sample_name, Population_code)]\n\n\n\nConversión del formato\nEste paso lo llevamos a cabo para poder agregar información en la misma tabla sobre el cohort de la muestra.\n\nvcf_chr22_long &lt;- melt(vcf_chr22, \n                 id.vars = c(\"CHROM\", \"POS\", \"ID\", \"REF\", \"ALT\"),  # Columns to keep as identifiers\n                 measure.vars = individuals_to_keep,                     # Genotype columns (samples)\n                 variable.name = \"Sample_name\",                    # Name of the new 'sample' column\n                 value.name = \"Genotype\")                          # Values will be in 'Genotype'\n\nUnir nuestro metadata con los datos de genotipado.\n\nvcf_chr22_long &lt;- merge(vcf_chr22_long, metadata, by = \"Sample_name\")\n\n\n\nAlgunos estadísticos de utilidad: frecuencia alélica\n\n# Calculate the number of alternative alleles per variant and per population\nvariant_summary &lt;- vcf_chr22_long[, .(\n  Total_alt_alleles = sum(Genotype, na.rm = TRUE),\n  Num_individuals = uniqueN(Sample_name)\n  # Sum the Genotype values to get total alternative alleles for each variant\n  ), by = .( ID, Population_code)]  # Group by variant and population\n\nvariant_summary[, alt_freq:= Total_alt_alleles/(Num_individuals*2)]",
+    "crumbs": [
+      "Ejercicios",
+      "Filtrado_variantes"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Repaso",
+    "section": "",
+    "text": "Primero recordemos algunas de las cosas que vieron con Sofía en las clases pasadas y que usaremos durante esta clase.\n\nSintaxis\nUtilizamos .() como un shortcut para list()\nEl símbolo := se usa pra crear o modificar columnas dentro del objeto.\nLa función merge sirve para unir 2 objetos data.table\n.N significa el número de renglones o instancias del objeto data.table",
+    "crumbs": [
+      "Introducción",
+      "Repaso"
+    ]
+  },
+  {
     "objectID": "GWAS.html",
     "href": "GWAS.html",
     "title": "GWAS",
@@ -52,61 +173,6 @@
     "crumbs": [
       "Introducción",
       "GWAS"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Repaso",
-    "section": "",
-    "text": "Primero recordemos algunas de las cosas que vieron con Sofía en las clases pasadas y que usaremos durante esta clase.\n\nSintaxis\nUtilizamos .() como un shortcut para list()\nEl símbolo := se usa pra crear o modificar columnas dentro del objeto.\nLa función merge sirve para unir 2 objetos data.table\n.N significa el número de renglones o instancias del objeto data.table",
-    "crumbs": [
-      "Introducción",
-      "Repaso"
-    ]
-  },
-  {
-    "objectID": "Graficacion_GWAS.html",
-    "href": "Graficacion_GWAS.html",
-    "title": "Graficación de GWAS",
-    "section": "",
-    "text": "Durante esta clase veremos como usar data.table para manejar datos de gran tamaño. Por ejemplo los summary statistics de GWAS. Los datos aquí usados se descargaron: Zenodo MXB Y son datos del artículo: Mexican Biobank advances population and medical genomics of diverse ancestries Para hacer este ejercicio sólo utilizaremos el archivo Tryglicerides_INT.imputed.stats.gz que se encuentra dentro de la carpeta full_cohort.",
-    "crumbs": [
-      "Ejercicios",
-      "Graficación de GWAS"
-    ]
-  },
-  {
-    "objectID": "Graficacion_GWAS.html#procesamiento-de-datos",
-    "href": "Graficacion_GWAS.html#procesamiento-de-datos",
-    "title": "Graficación de GWAS",
-    "section": "Procesamiento de datos",
-    "text": "Procesamiento de datos\n\nCargar librería\n\nlibrary(data.table)\n\n\n\nLectura de archivos\nPrimero leeremos nuestro archivo comprimido, para no ocupar tanto espacio de almacenamiento en nuestras computadoras. También veremos el tiempo que tarda nuestra máquina en leer el archivo.\n\nstart.time &lt;- Sys.time()\ntriglycerides &lt;- fread(file = \"/Users/mpalma/Downloads/full_cohort/Triglycerides_INT.imputed.stats.gz\", header = T)\nend.time &lt;- Sys.time()\n\nAhora, hagamos una pequeña exploración de nuestro archivo:\n\nhead(triglycerides)\n\n   CHROM GENPOS                 ID ALLELE0 ALLELE1   A1FREQ     INFO     N   TEST       BETA        SE    CHISQ\n   &lt;int&gt;  &lt;int&gt;             &lt;char&gt;  &lt;char&gt;  &lt;char&gt;    &lt;num&gt;    &lt;num&gt; &lt;int&gt; &lt;char&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;\n1:     1  10894     chr1:10894:G:A       A       G 0.999000 0.103158  4410    ADD  1.3398800 0.8940780 2.245850\n2:     1  10915     chr1:10915:G:A       A       G 0.999357 0.143333  4410    ADD  1.0408100 0.9420580 1.220630\n3:     1  10930     chr1:10930:G:A       A       G 0.996310 0.348625  4410    ADD  0.1250350 0.2530330 0.244178\n4:     1  10989     chr1:10989:G:A       A       G 0.996707 0.255428  4410    ADD -0.1307880 0.3126760 0.174963\n5:     1  11171 chr1:11171:CCTTG:C       C   CCTTG 0.947507 0.270755  4410    ADD  0.0761543 0.0775698 0.963838\n6:     1  23197       rs1220638906       T  TTAAAA 0.992670 0.281342  4410    ADD -0.0688404 0.2004550 0.117938\n           P   LOG10P  EXTRA\n       &lt;num&gt;    &lt;num&gt; &lt;lgcl&gt;\n1: 0.1339735 0.872981     NA\n2: 0.2692372 0.569865     NA\n3: 0.6212051 0.206765     NA\n4: 0.6757390 0.170221     NA\n5: 0.3262218 0.486487     NA\n6: 0.7312822 0.135915     NA\n\nclass(triglycerides)\n\n[1] \"data.table\" \"data.frame\"\n\ndim(triglycerides)\n\n[1] 25420360       15\n\n\nComo podemos ver, tenemos demasiados renglones, más de 25 millones. Las columnas de nuestro archivo:\n\nCHROM\nGENPOS\nID\nALLELE0\nALLELE1\nA1FREQ\nINFO\nN\nTEST\nBETA\nSE\nCHISQ\nP\nLOG10P\nEXTRA\n\n¿Para nuestro GWAS qué columnas necesitamos?\n\nCHROM\nGENPOS\nID\nP\n\n\ntriglycerides &lt;- triglycerides[, .(CHROM, GENPOS, ID, P)]\n\nSimplifiquemos los nombres de nuestras columnas\n\ntriglycerides &lt;- triglycerides[,.(CHR = CHROM, BP=GENPOS , SNP=ID, P)]\n\nPuedes explorar setnames para maneras alternativas de renombrar\nReto: ¿Cómo lo harías?\nConsideremos que en el caso de los humanos tenemos 22 cromosomas autosomales y cada variante tiene asociada un cromosoma y una posición en dicho cromosomas.\n¿Cómo hacemos que estas posiciones se puedan acomodar en el eje de las x?\nAlgoritmo\n\nAgrupar nuestros datos por cromosoma y estimar su longitud\nHacer la suma acumulada de las posiciones.\n\nComo puedes notar, no tenemos absolutamente todas las posiciones del genoma humano, pero nos es relevante la posición máxima que tenemos en los cromosomas.\n\n\nAgrupar por cromosoma y estimar la longitud\n\nchr_len &lt;- triglycerides[, .(chr_len = max(BP)), by = CHR]\n\n\n\nEstimar la suma acumulada de la longitud de cromosomas\n\nchr_len[, tot := cumsum(as.numeric(chr_len)) - chr_len]\n\n\nAñador esta informacio al data set original\n\ncum_triglycerides &lt;- merge(triglycerides, chr_len[, .(CHR, tot)], by = \"CHR\")\n\n\n\nAñadir la posicion acumulada a cada variante/SNP (Single Nucleotide Polymorphism)\n\ncum_triglycerides &lt;- cum_triglycerides[order(CHR, BP)]\ncum_triglycerides[, BPcum := BP + tot]\n\nTodo parece que va muy bien, pero ¿Creen que sea necesario graficar cada variante? ¿Podemos muestrear al azar? Mejor usamos p-value.\n\n\n\nMuestrear sin remplazo de manera aleatoria 1 de cada 200 variantes con P-value &gt; 0.01\n\nset.seed(123) # Establecer una semilla para reproducibilidad\nsampled_high_p &lt;- cum_triglycerides[P &gt; 0.01][sample(.N, .N / 200)]\nlow_p_data &lt;- cum_triglycerides[P &lt;= 0.01]\n\n# Combinar ambos conjuntos de datos\nsampled_data &lt;- rbind(low_p_data, sampled_high_p)",
-    "crumbs": [
-      "Ejercicios",
-      "Graficación de GWAS"
-    ]
-  },
-  {
-    "objectID": "Graficacion_GWAS.html#graficación",
-    "href": "Graficacion_GWAS.html#graficación",
-    "title": "Graficación de GWAS",
-    "section": "Graficación",
-    "text": "Graficación\n\nCargar librería\n\nlibrary(ggplot2)\nlibrary(scales)\n\nPara el eje de las x hay que estimar la posición central para cada cromosoma de acuerdo a las posiciones de cada cromosoma\n\naxisdf &lt;- cum_triglycerides[, .(center = (max(BPcum) + min(BPcum)) / 2), by = CHR]\n\n\n\nManhattan plot\n\nManhattan_plot &lt;- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +\n  \n  # Graficar los puntos y azul y gris intercalado por cromosoma\n  geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=0.5) +\n  scale_color_manual(values = rep(c(\"grey\", \"skyblue\"), 22 )) +\n  \n  # Personalizar ejes\n  scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center ) +\n  scale_y_continuous(expand = c(0, 0), labels=number_format(accuracy = 0.1) , limits=c(25,0), trans = \"reverse\")  +\n  \n  #### Añadir líneas de significancia\n  geom_hline(yintercept=-log10(1e-5), color = \"black\", linetype=\"dotted\", linewidth=0.3) +\n  geom_hline(yintercept=-log10(5e-8), color = \"black\", linetype=\"dashed\", linewidth=0.3) +\n  \n  #### Añadir título\n  \n  ggtitle(\"Triglycerides\")+\n  \n  # Detalles de tema:\n  theme_bw() +\n  theme( \n    legend.position=\"none\",\n    panel.border = element_blank(),\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank(),\n    axis.ticks.x = element_blank(),\n    axis.text.x =   element_blank(),\n    axis.title.x = element_blank()\n  )\n\n\n\nGuardar la imagen\n\nggsave(\"/Users/mpalma/Downloads/Manhattan_viernesbioinfo.png\", plot = Manhattan_plot)",
-    "crumbs": [
-      "Ejercicios",
-      "Graficación de GWAS"
-    ]
-  },
-  {
-    "objectID": "Graficacion_GWAS.html#plot",
-    "href": "Graficacion_GWAS.html#plot",
-    "title": "Graficación de GWAS",
-    "section": "Plot",
-    "text": "Plot\n\nprint(Manhattan_plot)\n\n\n\n\n\n\n\n\nAhora te toca a ti, realiza una gráfica similar para otro trait, en esta ocasión que el eje y no esté invertido y se muestre el número de cromosoma en el eje x.",
-    "crumbs": [
-      "Ejercicios",
-      "Graficación de GWAS"
     ]
   }
 ]

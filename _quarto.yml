@@ -28,10 +28,12 @@ website:
         contents:
         - index.qmd
         - GWAS.qmd
+        - VCF.qmd
 
       - section: "Ejercicios"
         contents:
           - Graficacion_GWAS.qmd
+          - VCF_filters.qmd
   
           
 

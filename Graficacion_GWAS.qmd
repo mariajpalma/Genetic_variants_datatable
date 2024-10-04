@@ -20,7 +20,7 @@ Primero leeremos nuestro archivo comprimido, para no ocupar tanto espacio de alm
 
 ```{r}
 start.time <- Sys.time()
-triglycerides <- fread(file = "/Users/mpalma/Downloads/full_cohort/Triglycerides_INT.imputed.stats.gz", header = T)
+triglycerides <- fread(file = "/Users/mpalma/Downloads/full_cohort/Glucose_INT.imputed.stats.gz", header = T)
 end.time <- Sys.time()
 
 ```
@@ -149,7 +149,7 @@ Manhattan_plot <- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +
   
   # Personalizar ejes
   scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center ) +
-  scale_y_continuous(expand = c(0, 0), labels=number_format(accuracy = 0.1) , limits=c(25,0), trans = "reverse")  +
+  scale_y_continuous(expand = c(0, 0), labels=number_format(accuracy = 0.1) , limits=c(0,25))  +
   
   #### Añadir líneas de significancia
   geom_hline(yintercept=-log10(1e-5), color = "black", linetype="dotted", linewidth=0.3) +
@@ -157,7 +157,7 @@ Manhattan_plot <- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +
   
   #### Añadir título
   
-  ggtitle("Triglycerides")+
+  ggtitle("Glucose")+
   
   # Detalles de tema:
   theme_bw() +
@@ -166,8 +166,8 @@ Manhattan_plot <- ggplot(sampled_data, aes(x=BPcum, y=-log10(P))) +
     panel.border = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
-    axis.ticks.x = element_blank(),
-    axis.text.x =   element_blank(),
+    #axis.ticks.x = element_blank(),
+    #axis.text.x =   element_blank(),
     axis.title.x = element_blank()
   )
 ```

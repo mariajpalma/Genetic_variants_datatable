@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>GWAS</title>
+<title>Filtrado_variantes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -106,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introducción</a></li><li class="breadcrumb-item"><a href="./GWAS.html">GWAS</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Graficacion_GWAS.html">Ejercicios</a></li><li class="breadcrumb-item"><a href="./VCF_filters.html">Filtrado_variantes</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -143,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./GWAS.html" class="sidebar-item-text sidebar-link active">
+  <a href="./GWAS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">GWAS</span></a>
   </div>
 </li>
@@ -172,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./VCF_filters.html" class="sidebar-item-text sidebar-link">
+  <a href="./VCF_filters.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Filtrado_variantes</span></a>
   </div>
 </li>
@@ -188,19 +222,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#qué-es-un-gwas" id="toc-qué-es-un-gwas" class="nav-link active" data-scroll-target="#qué-es-un-gwas">¿Qué es un GWAS?</a></li>
-  <li><a href="#qué-es-un-summary-statistic" id="toc-qué-es-un-summary-statistic" class="nav-link" data-scroll-target="#qué-es-un-summary-statistic">¿Qué es un summary statistic?</a></li>
-  <li><a href="#qué-es-el-tamaño-del-efecto" id="toc-qué-es-el-tamaño-del-efecto" class="nav-link" data-scroll-target="#qué-es-el-tamaño-del-efecto">¿Qué es el tamaño del efecto?</a></li>
-  <li><a href="#con-qué-software-lo-podemos-hacer" id="toc-con-qué-software-lo-podemos-hacer" class="nav-link" data-scroll-target="#con-qué-software-lo-podemos-hacer">¿Con qué software lo podemos hacer?</a></li>
+  <li><a href="#cargar-librería" id="toc-cargar-librería" class="nav-link active" data-scroll-target="#cargar-librería">Cargar librería</a></li>
+  <li><a href="#leer-el-archivo-vcf-del-cromosoma-22-pero-sólo-unas-muestras-y-saltando-unas-líneas" id="toc-leer-el-archivo-vcf-del-cromosoma-22-pero-sólo-unas-muestras-y-saltando-unas-líneas" class="nav-link" data-scroll-target="#leer-el-archivo-vcf-del-cromosoma-22-pero-sólo-unas-muestras-y-saltando-unas-líneas">Leer el archivo vcf del cromosoma 22, pero sólo unas muestras y saltando unas líneas</a></li>
+  <li><a href="#renombrar-y-organizar-columnas" id="toc-renombrar-y-organizar-columnas" class="nav-link" data-scroll-target="#renombrar-y-organizar-columnas">Renombrar y organizar columnas</a></li>
+  <li><a href="#quitar-variantes-que-sólo-tengan-alelo-alternativo-es-decir-que-no-sean-monomorficas-así-como-sólo-quedarnos-con-variantes-de-un-único-nucleótido." id="toc-quitar-variantes-que-sólo-tengan-alelo-alternativo-es-decir-que-no-sean-monomorficas-así-como-sólo-quedarnos-con-variantes-de-un-único-nucleótido." class="nav-link" data-scroll-target="#quitar-variantes-que-sólo-tengan-alelo-alternativo-es-decir-que-no-sean-monomorficas-así-como-sólo-quedarnos-con-variantes-de-un-único-nucleótido.">Quitar variantes que sólo tengan alelo alternativo, es decir que no sean monomorficas, así como sólo quedarnos con variantes de un único nucleótido.</a></li>
+  <li><a href="#quitar-variantes-con-más-del-5-de-datos-faltantes" id="toc-quitar-variantes-con-más-del-5-de-datos-faltantes" class="nav-link" data-scroll-target="#quitar-variantes-con-más-del-5-de-datos-faltantes">Quitar variantes con más del 5% de datos faltantes</a></li>
+  <li><a href="#quitar-muestras-con-más-del-5-de-datos-faltantes" id="toc-quitar-muestras-con-más-del-5-de-datos-faltantes" class="nav-link" data-scroll-target="#quitar-muestras-con-más-del-5-de-datos-faltantes">Quitar muestras con más del 5% de datos faltantes</a></li>
+  <li><a href="#cómo-traducimos-los-genotipos-a-un-número" id="toc-cómo-traducimos-los-genotipos-a-un-número" class="nav-link" data-scroll-target="#cómo-traducimos-los-genotipos-a-un-número">¿Cómo traducimos los genotipos a un número?</a></li>
+  <li><a href="#qué-sabemos-sobre-nuestras-muestras" id="toc-qué-sabemos-sobre-nuestras-muestras" class="nav-link" data-scroll-target="#qué-sabemos-sobre-nuestras-muestras">¿Qué sabemos sobre nuestras muestras?</a></li>
+  <li><a href="#conversión-del-formato" id="toc-conversión-del-formato" class="nav-link" data-scroll-target="#conversión-del-formato">Conversión del formato</a></li>
+  <li><a href="#algunos-estadísticos-de-utilidad-frecuencia-alélica" id="toc-algunos-estadísticos-de-utilidad-frecuencia-alélica" class="nav-link" data-scroll-target="#algunos-estadísticos-de-utilidad-frecuencia-alélica">Algunos estadísticos de utilidad: frecuencia alélica</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introducción</a></li><li class="breadcrumb-item"><a href="./GWAS.html">GWAS</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Graficacion_GWAS.html">Ejercicios</a></li><li class="breadcrumb-item"><a href="./VCF_filters.html">Filtrado_variantes</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">GWAS</h1>
+<h1 class="title">Filtrado_variantes</h1>
 </div>
 
 
@@ -217,37 +257,125 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="qué-es-un-gwas" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-un-gwas">¿Qué es un GWAS?</h2>
-<p>Genome Wide Association Studies (GWAS) son análisis en los que se estudia la asociación entre variantes a lo largo del genoma y un fenotipo. De manera sencilla, se buscan variantes que estén más presentes en individuos con cierto fenotipo. El fenotipo estudiado puede ser un rasgo continuo o la presencia o ausencia de algo, por ejemplo si se tiene o no un enfermedad.</p>
-</section>
-<section id="qué-es-un-summary-statistic" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-un-summary-statistic">¿Qué es un summary statistic?</h2>
-<p>Estas estadísticas resumidas continene la información del análisis estadístico para cada variante. Esto es el tamaño del efecto que tiene ese variante, la desviación estandar, un p-valor asociado entre otros valores.</p>
-</section>
-<section id="qué-es-el-tamaño-del-efecto" class="level2">
-<h2 class="anchored" data-anchor-id="qué-es-el-tamaño-del-efecto">¿Qué es el tamaño del efecto?</h2>
-<p>La fuerza de asociación entre la variante y el fenotipo de interés.</p>
-<p>El tipo de análisis estadístico usado para medir la fuerza de asociación depende del fenotipo, para fenotipos cuantitativos usamos la regresión lineal, mientras para fenotipos binarios usamos la regresión logística.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://www.frontiersin.org/files/Articles/703901/fgene-12-703901-HTML/image_m/fgene-12-703901-g008.jpg" class="img-fluid figure-img"></p>
-<figcaption>Regresión logística</figcaption>
-</figure>
+<section id="cargar-librería" class="level3">
+<h3 class="anchored" data-anchor-id="cargar-librería">Cargar librería</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Figura tomada de <a href="https://www.nature.com/articles/s41598-019-41602-6">Jaiswal et al., 2019</a></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-019-41602-6/MediaObjects/41598_2019_41602_Fig4_HTML.png?as=webp" class="img-fluid figure-img"></p>
-<figcaption>Regresión lineal</figcaption>
-</figure>
-</div>
-<p>Figura tomada de <a href="https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2021.703901/full">Robles-Espinoza et al., 2021</a></p>
-<p>Si quieren más información les recomiendo leer este artículo: <a href="https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2021.703901/full">An Overview of Strategies for Detecting Genotype-Phenotype Associations Across Ancestrally Diverse Populations</a></p>
 </section>
-<section id="con-qué-software-lo-podemos-hacer" class="level2">
-<h2 class="anchored" data-anchor-id="con-qué-software-lo-podemos-hacer">¿Con qué software lo podemos hacer?</h2>
-<p>Por ejemplo <a href="https://rgcgithub.github.io/regenie/">Regenie</a></p>
+<section id="leer-el-archivo-vcf-del-cromosoma-22-pero-sólo-unas-muestras-y-saltando-unas-líneas" class="level3">
+<h3 class="anchored" data-anchor-id="leer-el-archivo-vcf-del-cromosoma-22-pero-sólo-unas-muestras-y-saltando-unas-líneas">Leer el archivo vcf del cromosoma 22, pero sólo unas muestras y saltando unas líneas</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vcf_chr22 <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"ALL.chr22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz"</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">skip =</span> <span class="st">"#CHROM"</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">na.strings =</span> <span class="st">"."</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">select =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">2513</span>), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="renombrar-y-organizar-columnas" class="level3">
+<h3 class="anchored" data-anchor-id="renombrar-y-organizar-columnas">Renombrar y organizar columnas</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(vcf_chr22, <span class="st">"#CHROM"</span>, <span class="st">"CHROM"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vcf_chr22[, ID <span class="sc">:</span><span class="er">=</span> <span class="fu">paste</span>(CHROM, POS, <span class="at">sep =</span> <span class="st">"_"</span>)]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setcolorder</span>(vcf_chr22, <span class="fu">c</span>(<span class="fu">colnames</span>(vcf_chr22)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="st">"ID"</span>, <span class="fu">colnames</span>(vcf_chr22)[<span class="dv">3</span><span class="sc">:</span>(<span class="fu">ncol</span>(vcf_chr22) <span class="sc">-</span> <span class="dv">1</span>)]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="quitar-variantes-que-sólo-tengan-alelo-alternativo-es-decir-que-no-sean-monomorficas-así-como-sólo-quedarnos-con-variantes-de-un-único-nucleótido." class="level3">
+<h3 class="anchored" data-anchor-id="quitar-variantes-que-sólo-tengan-alelo-alternativo-es-decir-que-no-sean-monomorficas-así-como-sólo-quedarnos-con-variantes-de-un-único-nucleótido.">Quitar variantes que sólo tengan alelo alternativo, es decir que no sean monomorficas, así como sólo quedarnos con variantes de un único nucleótido.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>vcf_chr22 <span class="ot">&lt;-</span> vcf_chr22[<span class="sc">!</span><span class="fu">is.na</span>(ALT)]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vcf_chr22 <span class="ot">&lt;-</span> vcf_chr22[<span class="fu">grepl</span>(<span class="st">"^[ATCG]$"</span>, ALT)]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>vcf_chr22 <span class="ot">&lt;-</span> vcf_chr22[<span class="fu">grepl</span>(<span class="st">"^[ATCG]$"</span>, REF)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="quitar-variantes-con-más-del-5-de-datos-faltantes" class="level3">
+<h3 class="anchored" data-anchor-id="quitar-variantes-con-más-del-5-de-datos-faltantes">Quitar variantes con más del 5% de datos faltantes</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>genotype_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(vcf_chr22)[<span class="dv">6</span><span class="sc">:</span><span class="fu">ncol</span>(vcf_chr22)] <span class="co"># columns with genotype data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary column for counting missing genotypes</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>vcf_chr22[, missing_count <span class="sc">:</span><span class="er">=</span> <span class="fu">rowSums</span>(.SD <span class="sc">==</span> <span class="st">"."</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), .SDcols <span class="ot">=</span> genotype_cols]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate total number of samples (excluding the fixed columns)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>num_samples <span class="ot">&lt;-</span> <span class="fu">length</span>(genotype_cols)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the percentage of missing data</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>vcf_chr22[, missing_pct <span class="sc">:</span><span class="er">=</span> missing_count <span class="sc">/</span> (num_samples <span class="sc">*</span> <span class="dv">2</span>)]  <span class="co"># Each sample has two alleles</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep rows with less than 5% missing data</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>vcf_chr22 <span class="ot">&lt;-</span> vcf_chr22[missing_pct <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally remove the temporary columns</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>vcf_chr22[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(<span class="at">missing_count =</span> <span class="cn">NULL</span>, <span class="at">missing_pct =</span> <span class="cn">NULL</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="quitar-muestras-con-más-del-5-de-datos-faltantes" class="level3">
+<h3 class="anchored" data-anchor-id="quitar-muestras-con-más-del-5-de-datos-faltantes">Quitar muestras con más del 5% de datos faltantes</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Identify individuals with &lt; 5% missing data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>missing_counts <span class="ot">&lt;-</span> vcf_chr22[, <span class="fu">lapply</span>(.SD, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">==</span> <span class="st">"."</span>)), .SDcols <span class="ot">=</span> genotype_cols]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate total number of variants</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>total_variants <span class="ot">&lt;-</span> <span class="fu">nrow</span>(vcf_chr22)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate percentage of missing data for each individual</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>missing_pct <span class="ot">&lt;-</span> <span class="fu">colSums</span>(missing_counts) <span class="sc">/</span> total_variants</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify individuals to keep (&lt; 5% missing data)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>individuals_to_keep <span class="ot">&lt;-</span> <span class="fu">names</span>(missing_pct[missing_pct <span class="sc">&lt;</span> <span class="fl">0.05</span>])</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the dataset to keep only relevant columns</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CHROM"</span>, <span class="st">"POS"</span>, <span class="st">"ID"</span>, <span class="st">"REF"</span>, <span class="st">"ALT"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>info_ikeep <span class="ot">&lt;-</span> <span class="fu">c</span>(info, individuals_to_keep)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>vcf_chr22 <span class="ot">&lt;-</span> vcf_chr22[, ..info_ikeep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cómo-traducimos-los-genotipos-a-un-número" class="level3">
+<h3 class="anchored" data-anchor-id="cómo-traducimos-los-genotipos-a-un-número">¿Cómo traducimos los genotipos a un número?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>vcf_chr22[, (genotype_cols) <span class="sc">:</span><span class="er">=</span> <span class="fu">lapply</span>(.SD, <span class="cf">function</span>(gt) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Split the genotype string (e.g., "0|1") and count the number of '1's</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(<span class="fu">strsplit</span>(gt, <span class="st">"</span><span class="sc">\\</span><span class="st">|"</span>), <span class="cf">function</span>(alleles) <span class="fu">sum</span>(alleles <span class="sc">==</span> <span class="st">"1"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}), .SDcols <span class="ot">=</span> individuals_to_keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="qué-sabemos-sobre-nuestras-muestras" class="level3">
+<h3 class="anchored" data-anchor-id="qué-sabemos-sobre-nuestras-muestras">¿Qué sabemos sobre nuestras muestras?</h3>
+<p>En esta ocasión sólo mantendremos la información sobre el cohort al que pertenecen</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"igsr_samples_1000G.tsv"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(metadata, <span class="st">"Sample name"</span>, <span class="st">"Sample_name"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(metadata, <span class="st">"Population code"</span>, <span class="st">"Population_code"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> metadata[, .(Sample_name, Population_code)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conversión-del-formato" class="level3">
+<h3 class="anchored" data-anchor-id="conversión-del-formato">Conversión del formato</h3>
+<p>Este paso lo llevamos a cabo para poder agregar información en la misma tabla sobre el cohort de la muestra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vcf_chr22_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(vcf_chr22, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"CHROM"</span>, <span class="st">"POS"</span>, <span class="st">"ID"</span>, <span class="st">"REF"</span>, <span class="st">"ALT"</span>),  <span class="co"># Columns to keep as identifiers</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">measure.vars =</span> individuals_to_keep,                     <span class="co"># Genotype columns (samples)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">variable.name =</span> <span class="st">"Sample_name"</span>,                    <span class="co"># Name of the new 'sample' column</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">value.name =</span> <span class="st">"Genotype"</span>)                          <span class="co"># Values will be in 'Genotype'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Unir nuestro metadata con los datos de genotipado.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>vcf_chr22_long <span class="ot">&lt;-</span> <span class="fu">merge</span>(vcf_chr22_long, metadata, <span class="at">by =</span> <span class="st">"Sample_name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="algunos-estadísticos-de-utilidad-frecuencia-alélica" class="level3">
+<h3 class="anchored" data-anchor-id="algunos-estadísticos-de-utilidad-frecuencia-alélica">Algunos estadísticos de utilidad: frecuencia alélica</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of alternative alleles per variant and per population</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>variant_summary <span class="ot">&lt;-</span> vcf_chr22_long[, .(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Total_alt_alleles =</span> <span class="fu">sum</span>(Genotype, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Num_individuals =</span> <span class="fu">uniqueN</span>(Sample_name)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sum the Genotype values to get total alternative alleles for each variant</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  ), by <span class="ot">=</span> .( ID, Population_code)]  <span class="co"># Group by variant and population</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>variant_summary[, alt_freq<span class="sc">:</span><span class="er">=</span> Total_alt_alleles<span class="sc">/</span>(Num_individuals<span class="sc">*</span><span class="dv">2</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

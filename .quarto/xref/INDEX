@@ -10,5 +10,11 @@
   },
   "GWAS.qmd": {
     "GWAS.html": "449128fe"
+  },
+  "VCF_filters.qmd": {
+    "VCF_filters.html": "bb351a9b"
+  },
+  "VCF.qmd": {
+    "VCF.html": "750e58f1"
   }
 }

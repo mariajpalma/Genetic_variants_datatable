@@ -1,2 +1,6 @@
 "0","set.seed(123) # Establecer una semilla para reproducibilidad"
-"0","sampled_data <- cum_triglycerides[P > 0.01][sample(.N, .N / 200)]"
+"0","sampled_high_p <- cum_triglycerides[P > 0.01][sample(.N, .N / 200)]"
+"0","low_p_data <- cum_triglycerides[P <= 0.01]"
+"0",""
+"0","# Combinar ambos conjuntos de datos"
+"0","sampled_data <- rbind(low_p_data, sampled_high_p)"

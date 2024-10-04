@@ -181,6 +181,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">GWAS</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./VCF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">VCF format</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -196,6 +202,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./Graficacion_GWAS.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Graficación de GWAS</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./VCF_filters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filtrado_variantes</span></a>
   </div>
 </li>
       </ul>
@@ -264,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Primero leeremos nuestro archivo comprimido, para no ocupar tanto espacio de almacenamiento en nuestras computadoras. También veremos el tiempo que tarda nuestra máquina en leer el archivo.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>start.time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>triglycerides <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="at">file =</span> <span class="st">"/Users/mpalma/Downloads/full_cohort/Triglycerides_INT.imputed.stats.gz"</span>, <span class="at">header =</span> T)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>triglycerides <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="at">file =</span> <span class="st">"/Users/mpalma/Downloads/full_cohort/Glucose_INT.imputed.stats.gz"</span>, <span class="at">header =</span> T)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>end.time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora, hagamos una pequeña exploración de nuestro archivo:</p>
@@ -273,20 +285,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>   CHROM GENPOS                 ID ALLELE0 ALLELE1   A1FREQ     INFO     N   TEST       BETA        SE    CHISQ
    &lt;int&gt;  &lt;int&gt;             &lt;char&gt;  &lt;char&gt;  &lt;char&gt;    &lt;num&gt;    &lt;num&gt; &lt;int&gt; &lt;char&gt;      &lt;num&gt;     &lt;num&gt;    &lt;num&gt;
-1:     1  10894     chr1:10894:G:A       A       G 0.999000 0.103158  4410    ADD  1.3398800 0.8940780 2.245850
-2:     1  10915     chr1:10915:G:A       A       G 0.999357 0.143333  4410    ADD  1.0408100 0.9420580 1.220630
-3:     1  10930     chr1:10930:G:A       A       G 0.996310 0.348625  4410    ADD  0.1250350 0.2530330 0.244178
-4:     1  10989     chr1:10989:G:A       A       G 0.996707 0.255428  4410    ADD -0.1307880 0.3126760 0.174963
-5:     1  11171 chr1:11171:CCTTG:C       C   CCTTG 0.947507 0.270755  4410    ADD  0.0761543 0.0775698 0.963838
-6:     1  23197       rs1220638906       T  TTAAAA 0.992670 0.281342  4410    ADD -0.0688404 0.2004550 0.117938
-           P   LOG10P  EXTRA
-       &lt;num&gt;    &lt;num&gt; &lt;lgcl&gt;
-1: 0.1339735 0.872981     NA
-2: 0.2692372 0.569865     NA
-3: 0.6212051 0.206765     NA
-4: 0.6757390 0.170221     NA
-5: 0.3262218 0.486487     NA
-6: 0.7312822 0.135915     NA</code></pre>
+1:     1  10894     chr1:10894:G:A       A       G 0.998977 0.103625  4418    ADD  0.3059710 0.9390870 0.106157
+2:     1  10915     chr1:10915:G:A       A       G 0.999336 0.143104  4418    ADD  0.3243080 0.9879230 0.107763
+3:     1  10930     chr1:10930:G:A       A       G 0.996291 0.348130  4418    ADD  0.4716960 0.2689780 3.075330
+4:     1  10989     chr1:10989:G:A       A       G 0.996688 0.256007  4418    ADD -0.1462470 0.3317240 0.194366
+5:     1  11171 chr1:11171:CCTTG:C       C   CCTTG 0.947664 0.270913  4418    ADD  0.0323001 0.0822278 0.154301
+6:     1  23197       rs1220638906       T  TTAAAA 0.992480 0.289927  4418    ADD -0.2011720 0.2076770 0.938331
+            P   LOG10P  EXTRA
+        &lt;num&gt;    &lt;num&gt; &lt;lgcl&gt;
+1: 0.74456223 0.128099     NA
+2: 0.74270612 0.129183     NA
+3: 0.07948771 1.099700     NA
+4: 0.65930748 0.180912     NA
+5: 0.69445802 0.158354     NA
+6: 0.33270705 0.477938     NA</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -294,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(triglycerides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 25420360       15</code></pre>
+<pre><code>[1] 25454794       15</code></pre>
 </div>
 </div>
 <p>Como podemos ver, tenemos demasiados renglones, más de 25 millones. Las columnas de nuestro archivo:</p>
@@ -402,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Personalizar ejes</span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>( <span class="at">label =</span> axisdf<span class="sc">$</span>CHR, <span class="at">breaks=</span> axisdf<span class="sc">$</span>center ) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">labels=</span><span class="fu">number_format</span>(<span class="at">accuracy =</span> <span class="fl">0.1</span>) , <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">0</span>), <span class="at">trans =</span> <span class="st">"reverse"</span>)  <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">labels=</span><span class="fu">number_format</span>(<span class="at">accuracy =</span> <span class="fl">0.1</span>) , <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))  <span class="sc">+</span></span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Añadir líneas de significancia</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">1e-5</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype=</span><span class="st">"dotted"</span>, <span class="at">linewidth=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
@@ -410,7 +422,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">#### Añadir título</span></span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Triglycerides"</span>)<span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Glucose"</span>)<span class="sc">+</span></span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Detalles de tema:</span></span>
 <span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -419,8 +431,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span>   <span class="fu">element_blank</span>(),</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#axis.ticks.x = element_blank(),</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#axis.text.x =   element_blank(),</span></span>
 <span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>()</span>
 <span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
